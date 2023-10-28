@@ -1,7 +1,5 @@
 import React from "react";
 import { Container } from "./form.style";
-// import { testCPF } from "../testCpf/testCpf";
-// import { testCpf } from "./TestCpf";
 
 export class Form extends React.Component {
   constructor(props){
@@ -9,21 +7,21 @@ export class Form extends React.Component {
 
     this.state={
       username: {
-        value: ""
+        value: "",
+        submittedValue: ""
       },
       birthdate: {
-        value: ""
+        value: "",
+        submittedValue: ""
       },
       gender: {
-        value: ""
+        value: "",
+        submittedValue: ""
       },
       isSubmitted: false,
     }
   }
 
-  // handleChange = (event) => {
-  //   this.setState({  })
-  // }
   handleUsername = (event) => {
     this.setState({ 
       username: {...this.state.username, value: event.target.value }
@@ -44,7 +42,12 @@ export class Form extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.setState({isSubmitted: true})
+    this.setState({
+      isSubmitted: true,
+      username: { ...this.state.username, submittedValue: this.state.username.value },
+      birthdate: { ...this.state.birthdate, submittedValue: this.state.birthdate.value },
+      gender: { ...this.state.gender, submittedValue: this.state.gender.value },
+    })
   }
 
   render(){
@@ -103,7 +106,7 @@ export class Form extends React.Component {
             <input type="submit" value="submit" />
             {this.state.isSubmitted && (
               <>
-                {this.state.username.value.length === 0 && <p className="erro">*O cpf é obrigatório</p>}
+                {this.state.username.value.length === 0 && <p className="erro">*O username é obrigatório</p>}
                 {this.state.birthdate.value === '' && <p className="erro">*A data de nascimento é obrigatório</p>}
                 {this.state.gender.value === '' && <p className="erro">*O genero é obrigatório</p>}
               </>
@@ -114,9 +117,9 @@ export class Form extends React.Component {
         <div className="col2 box">
           {this.state.isSubmitted && (
             <>
-              <p>Username: {this.state.username.value}</p>
-              <p>Birthdate: {this.state.birthdate.value}</p>
-              <p>Gender: {this.state.gender.value}</p>
+              <p>Username: {this.state.username.submittedValue}</p>
+              <p>Birthdate: {this.state.birthdate.submittedValue}</p>
+              <p>Gender: {this.state.gender.submittedValue}</p>
             </>
           )}
         </div>
